@@ -1,0 +1,98 @@
+﻿@page "/user/profile"
+
+<div class="row">
+    <div class="col-12">
+        <h3 class="page-header">Profile</h3>
+    </div>
+</div>
+
+<Condition Evaluation="ShowServerErrors">
+    <Match>
+        <div class="row">
+            <div class="col-12">
+                <ul class="error-list">
+                    <Iterations Items="ServerMessages">
+                        <li class=validation-message>@context</li>
+                    </Iterations>
+                </ul>
+            </div>
+        </div>
+    </Match>
+</Condition>
+
+<Condition Evaluation="UserDto is not null">
+    <Match>
+        <EditForm Model="UserDto" OnValidSubmit="HandleSubmit">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <InputText type="text" class="form-control" @bind-Value="UserDto.FirstName" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <InputText type="text" class="form-control" @bind-Value="UserDto.LastName" />
+                    </div>
+
+                    @*<div class="form-group">
+                        <label class="form-label">Hire Date</label>
+                        <InputDate @bind-Value="UserDto.HireDate" class="form-control" max='@DateTime.Today.ToString("yyyy-MM-dd")' />
+                        <div class="form-text">Please enter at least the month and year of hire. Select the 1st of the month if you are unsure of the exact day.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Vacation Days Accrued Per Month</label>
+                        <InputNumber @bind-Value="UserDto.VacationDaysAccruedPerMonth" class="form-control" step="0.01" min="0" max="260" />
+                        <div class="form-text">Enter value only if your accrual rate is different than the default.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Sick Hours Accrued Per Month</label>
+                        <InputNumber @bind-Value="UserDto.SickHoursAccruedPerMonth" class="form-control" step="0.01" min="0" max="2080" />
+                        <div class="form-text">Enter value only if your accrual rate is different than the default.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Personal Days Per Year</label>
+                        <InputNumber @bind-Value="UserDto.PersonalDaysPerYear" class="form-control" step="0.01" min="0" max="260" />
+                        <div class="form-text">Enter value only if your accrual rate is different than the default.</div>
+                    </div>
+
+                    <Condition Evaluation="UserDto.HireDate.Year < DateTime.Today.Year">
+                        <Match>
+                            <div class="form-group">
+                                <label class="form-label">Did you carry over any vacation days from last year? (0.125 days = 1 hour)</label>
+                                <InputNumber disabled @bind-Value="VacationCarriedOver" class="form-control" step="0.125" min="0" max="5.00" />
+                            </div>
+                        </Match>
+                    </Condition>*@
+
+                    <div class="form-group text-end">
+                        <button type="reset" class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/")'>Cancel</button>
+
+                        <Condition Evaluation="DisableSubmit">
+                            <Match>
+                                <button type="button" class="btn btn-success" disabled>
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Submitting...
+                                </button>
+                            </Match>
+                            <NotMatch>
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </NotMatch>
+                        </Condition>
+                    </div>
+                </div>
+            </div>
+        </EditForm>
+    </Match>
+
+    <NotMatch>
+        <div class="row">
+            <div class="col-12 text-center">
+                <LoadingSpinner MarginTop="50" />
+            </div>
+        </div>
+    </NotMatch>
+</Condition>

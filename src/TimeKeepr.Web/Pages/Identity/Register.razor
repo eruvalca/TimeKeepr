@@ -1,0 +1,102 @@
+﻿@page "/user/register"
+
+<div class="row">
+    <div class="col-12">
+        <h3 class="page-header">Register</h3>
+    </div>
+</div>
+
+<Condition Evaluation="ShowServerErrors">
+    <Match>
+        <div class="row">
+            <div class="col-12">
+                <ul class="error-list">
+                    <Iterations Items="ServerMessages">
+                        <li class=validation-message>@context</li>
+                    </Iterations>
+                </ul>
+            </div>
+        </div>
+    </Match>
+</Condition>
+
+<EditForm Model="RegisterDto" OnValidSubmit="HandleSubmit">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <InputText class="form-control" @bind-Value="RegisterDto.Email" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <InputText type="password" class="form-control" @bind-Value="RegisterDto.Password" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Confirm Password</label>
+                <InputText type="password" class="form-control" @bind-Value="RegisterDto.ConfirmPassword" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">First Name</label>
+                <InputText class="form-control" @bind-Value="RegisterDto.FirstName" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <InputText class="form-control" @bind-Value="RegisterDto.LastName" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Hire Date</label>
+                <InputDate @bind-Value="RegisterDto.HireDate" class="form-control" max='@DateTime.Today.ToString("yyyy-MM-dd")' />
+                <div class="form-text">Please enter at least the month and year of hire. Select the 1st of the month if you are unsure of the exact day.</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Vacation Days Accrued Per Month</label>
+                <InputNumber @bind-Value="RegisterDto.VacationDaysAccruedPerMonth" class="form-control" step="0.01" min="0" max="260" />
+                <div class="form-text">Enter value only if your accrual rate is different than the default.</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Sick Hours Accrued Per Month</label>
+                <InputNumber @bind-Value="RegisterDto.SickHoursAccruedPerMonth" class="form-control" step="0.01" min="0" max="2080" />
+                <div class="form-text">Enter value only if your accrual rate is different than the default.</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Personal Days Per Year</label>
+                <InputNumber @bind-Value="RegisterDto.PersonalDaysPerYear" class="form-control" step="0.01" min="0" max="260" />
+                <div class="form-text">Enter value only if your accrual rate is different than the default.</div>
+            </div>
+
+            <Condition Evaluation="RegisterDto.HireDate.Year < DateTime.Today.Year">
+                <Match>
+                    <div class="form-group">
+                        <label class="form-label">Did you carry over any vacation days from last year? (0.125 days = 1 hour)</label>
+                        <InputNumber @bind-Value="VacationCarriedOver" class="form-control" step="0.125" min="0" max="5.00" />
+                    </div>
+                </Match>
+            </Condition>
+
+            <div class="form-group text-end">
+                <button type="reset" class="btn btn-secondary" @onclick='() => Navigation.NavigateTo("/")'>Cancel</button>
+
+                <Condition Evaluation="DisableSubmit">
+                    <Match>
+                        <button type="button" class="btn btn-success" disabled>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Registering...
+                        </button>
+                    </Match>
+
+                    <NotMatch>
+                        <button type="submit" class="btn btn-success">Register</button>
+                    </NotMatch>
+                </Condition>
+            </div>
+        </div>
+    </div>
+</EditForm>
