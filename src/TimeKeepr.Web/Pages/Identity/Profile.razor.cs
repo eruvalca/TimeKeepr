@@ -50,7 +50,17 @@ namespace TimeKeepr.Web.Pages.Identity
 
             //VacationCarriedOver = vacationCarriedOverEntry is null ? 0 : vacationCarriedOverEntry.PTOHours / 8;
 
-            UserDto = new UpdateApplicationUserDto(User);
+            UserDto = new UpdateApplicationUserDto()
+            {
+                Id = User.Id,
+                Email = User.Email,
+                FirstName = User.FirstName,
+                LastName = User.LastName,
+                HireDate = User.HireDate,
+                VacationDaysAccruedPerMonth = User.VacationDaysAccruedPerMonth,
+                SickHoursAccruedPerMonth = User.SickHoursAccruedPerMonth,
+                PersonalDaysPerYear = User.PersonalDaysPerYear
+            };
         }
 
         private async Task HandleSubmit()

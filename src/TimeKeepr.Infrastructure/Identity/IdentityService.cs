@@ -134,7 +134,7 @@ namespace TimeKeepr.Infrastructure.Identity
                 return (true, thisUser.Id);
             }
 
-            return (false, "There was an issue updating the user.");
+            return (false, result.Errors.FirstOrDefault().Description);
         }
     }
 }

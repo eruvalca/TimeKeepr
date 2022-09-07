@@ -69,9 +69,15 @@ namespace TimeKeepr.Api.Controllers.v1
             }
         }
 
-        [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] UpdateApplicationUserDto updateDto)
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> Update(string id, [FromBody] UpdateApplicationUserDto updateDto)
         {
+            if (id != updateDto.Id)
+            {
+                var response = IdentityRequestResult.Failure(new string[] { "The given user id does not match the updated user id." });
+                return BadRequest(response);
+            }
+
             var result = await _identityService.UpdateUserAsync(updateDto);
 
             if (result.Item1)

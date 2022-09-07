@@ -75,7 +75,7 @@ namespace TimeKeepr.Web.Services
 
         public async Task<IdentityRequestResult> UpdateUser(UpdateApplicationUserDto userDto)
         {
-            var response = await _client.PutAsJsonAsync("identity/update", userDto);
+            var response = await _client.PutAsJsonAsync($"identity/update/{userDto.Id}", userDto);
             var result = await response.Content.ReadFromJsonAsync<IdentityRequestResult>();
 
             if (result is not null)
