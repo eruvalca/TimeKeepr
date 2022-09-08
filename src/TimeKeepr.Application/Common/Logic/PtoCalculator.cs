@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TimeKeepr.Application.PtoEntries.Dtos;
 using TimeKeepr.Domain.Entities;
 using TimeKeepr.Domain.Enums;
 
-namespace TimeKeepr.Domain.Logic
+namespace TimeKeepr.Application.Common.Logic
 {
     public static class PtoCalculator
     {
@@ -53,7 +54,7 @@ namespace TimeKeepr.Domain.Logic
         }
 
         public static decimal GetVacationHoursAvailableByDate(DateTime hireDate, decimal vacationDaysAccruedPerMonth,
-            IEnumerable<PtoEntry> ptoEntries, DateTime asOfDate)
+            IEnumerable<PtoEntryDto> ptoEntries, DateTime asOfDate)
         {
             hireDate = hireDate.ToUniversalTime();
             asOfDate = asOfDate.ToUniversalTime();

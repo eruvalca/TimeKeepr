@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TimeKeepr.Application.Common.Interfaces;
+using TimeKeepr.Application.Common.Logic;
 using TimeKeepr.Application.Holidays.Dtos;
+using TimeKeepr.Application.Identity.Dtos;
 using TimeKeepr.Application.PtoEntries.Dtos;
 using TimeKeepr.Domain.Entities;
 
@@ -23,7 +25,8 @@ namespace TimeKeepr.Application.PtoEntries
         public async Task<IEnumerable<PtoEntryDto>> GetUserPtoEntriesByYearAsync(string applicationUserId, int year)
         {
             return await _context.PtoEntries
-                .Where(p => p.ApplicationUserId == applicationUserId && p.PtoDate.Year == year)
+                .Where(p => p.ApplicationUserId == applicationUserId
+                    && p.PtoDate.Year == year)
                 .Select(p => new PtoEntryDto
                 {
                     PtoEntryId = p.PtoEntryId,
@@ -123,6 +126,34 @@ namespace TimeKeepr.Application.PtoEntries
             }
 
             return 0;
+        }
+
+        public async Task<bool> AddYearlyVacationCarryOverAsync(IEnumerable<ApplicationUserDto> users, DateTime asOfDate)
+        {
+            var newPtoEntries = new List<PtoEntry>();
+
+            foreach (var appUser in users)
+            {
+                var previousYearPtoEntries = await GetUserPtoEntriesByYearAsync(appUser.Id, asOfDate.Year - 1);
+
+                var vacationToCarryOver = PtoCalculator.GetVacationHoursAvailableByDate(appUser.HireDate,
+                    appUser.VacationDaysAccruedPerMonth, previousYearPtoEntries, asOfDate.AddDays(-1));
+
+                var newPtoEntry = new PtoEntry
+                {
+                    PtoHours = vacationToCarryOver > 40 ? 40 : vacationToCarryOver,
+                    PtoType = Domain.Enums.PtoType.VacationCarryOver,
+                    PtoDate = asOfDate,
+                    Created = DateTime.UtcNow,
+                    CreatedBy = appUser.Id,
+                    ApplicationUserId = appUser.Id
+                };
+
+                newPtoEntries.Add(newPtoEntry);
+            }
+
+            await _context.PtoEntries.AddRangeAsync(newPtoEntries);
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }
