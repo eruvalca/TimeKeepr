@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TimeKeepr.Application.Common.Dtos;
 using TimeKeepr.Application.Holidays;
 using TimeKeepr.Application.Holidays.Dtos;
@@ -7,6 +8,7 @@ using TimeKeepr.Application.Holidays.Dtos;
 
 namespace TimeKeepr.Api.Controllers.v1
 {
+    [Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class HolidaysController : ControllerBase

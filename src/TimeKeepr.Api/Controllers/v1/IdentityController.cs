@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TimeKeepr.Application.Common.Interfaces;
 using TimeKeepr.Application.Identity.Dtos;
@@ -69,6 +70,7 @@ namespace TimeKeepr.Api.Controllers.v1
             }
         }
 
+        [Authorize]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> Update(string id, [FromBody] UpdateApplicationUserDto updateDto)
         {
