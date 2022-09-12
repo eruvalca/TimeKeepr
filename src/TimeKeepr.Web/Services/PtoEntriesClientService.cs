@@ -52,28 +52,28 @@ namespace TimeKeepr.Web.Services
             return RequestResult<PtoEntryDto>.Failure(new string[] { "There was an issue creating the PTO entry." });
         }
 
-        public async Task<bool> Update(int id, UpdatePtoEntryDto updatePtoEntryDto)
+        public async Task<RequestResult<int>> Update(int id, UpdatePtoEntryDto updatePtoEntryDto)
         {
             var response = await _client.PutAsJsonAsync($"ptoEntries/{id}", updatePtoEntryDto);
 
             if (!response.IsSuccessStatusCode)
             {
-                return false;
+                return RequestResult<int>.Failure(new string[] { "There was an issue updating the PTO entry." });
             }
 
-            return true;
+            return RequestResult<int>.Success(1);
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<RequestResult<int>> Delete(int id)
         {
             var response = await _client.DeleteAsync($"ptoEntries/{id}");
 
             if (!response.IsSuccessStatusCode)
             {
-                return false;
+                return RequestResult<int>.Failure(new string[] { "There was an issue deleting the PTO entry." });
             }
 
-            return true;
+            return RequestResult<int>.Success(1);
         }
     }
 }

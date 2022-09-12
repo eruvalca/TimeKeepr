@@ -134,7 +134,30 @@ namespace TimeKeepr.Infrastructure.Identity
                 return (true, thisUser.Id);
             }
 
-            return (false, "There was an issue updating the user.");
+            return (false, result.Errors.FirstOrDefault().Description);
+        }
+
+        public async Task<(bool, IEnumerable<ApplicationUserDto>)> GetAllUsersAsync()
+        {
+            var allUsers = await _userManager.Users
+                .Select(u => new ApplicationUserDto
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    HireDate = u.HireDate,
+                    VacationDaysAccruedPerMonth = u.VacationDaysAccruedPerMonth,
+                    SickHoursAccruedPerMonth = u.SickHoursAccruedPerMonth,
+                    PersonalDaysPerYear = u.PersonalDaysPerYear
+                }).ToListAsync();
+
+            if (allUsers.Any())
+            {
+                return (true, allUsers);
+            }
+
+            return (false, new List<ApplicationUserDto>());
         }
     }
 }

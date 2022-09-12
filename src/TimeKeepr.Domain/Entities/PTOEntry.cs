@@ -15,7 +15,7 @@ namespace TimeKeepr.Domain.Entities
         public DateTime PtoDate { get; set; }
         public DateTime Created { get; set; }
         public string? CreatedBy { get; set; }
-        public DateTime LastModified { get; set; }
+        public DateTime? LastModified { get; set; }
         public string? ModifiedBy { get; set; }
         public string? ApplicationUserId { get; set; }
     }

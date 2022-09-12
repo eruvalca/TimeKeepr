@@ -8,7 +8,7 @@ namespace TimeKeepr.Application.Identity.Dtos
 {
     public class UpdateApplicationUserDto
     {
-        public string Id { get; set; }
+        public string Id { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
@@ -16,17 +16,5 @@ namespace TimeKeepr.Application.Identity.Dtos
         public decimal VacationDaysAccruedPerMonth { get; set; }
         public decimal SickHoursAccruedPerMonth { get; set; }
         public int PersonalDaysPerYear { get; set; }
-
-        public UpdateApplicationUserDto(ApplicationUserDto appUserDto)
-        {
-            Id = appUserDto.Id;
-            Email = appUserDto.Email;
-            FirstName = appUserDto.FirstName;
-            LastName = appUserDto.LastName;
-            HireDate = appUserDto.HireDate.ToLocalTime();
-            VacationDaysAccruedPerMonth = appUserDto.VacationDaysAccruedPerMonth;
-            SickHoursAccruedPerMonth = appUserDto.SickHoursAccruedPerMonth;
-            PersonalDaysPerYear = appUserDto.PersonalDaysPerYear;
-        }
     }
 }

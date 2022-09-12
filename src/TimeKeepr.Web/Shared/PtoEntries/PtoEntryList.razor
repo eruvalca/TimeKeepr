@@ -1,0 +1,30 @@
+﻿
+<div class="row">
+    <div class="col-12">
+        <h5 class="header">PTO Entries</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <Condition Evaluation="PtoEntries.Any(p => p.PtoDate.ToLocalTime().Date < DateTime.Today.Date)">
+            <Match>
+                <details>
+                    <summary>
+                        <span class="text-muted">Past</span>
+                    </summary>
+                    <PtoEntriesTable PtoEntries="PtoEntries.Where(p => p.PtoDate.ToLocalTime().Date < DateTime.Today.Date).ToList()" />
+                </details>
+            </Match>
+        </Condition>
+        <Condition Evaluation="PtoEntries.Any(p => p.PtoDate.ToLocalTime().Date >= DateTime.Today.Date)">
+            <Match>
+                <details open>
+                    <summary>
+                        <span class="text-muted">Upcoming</span>
+                    </summary>
+                    <PtoEntriesTable PtoEntries="PtoEntries.Where(p => p.PtoDate.ToLocalTime().Date >= DateTime.Today.Date).ToList()" />
+                </details>
+            </Match>
+        </Condition>
+    </div>
+</div>

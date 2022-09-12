@@ -11,5 +11,7 @@ namespace TimeKeepr.Application.Common.Interfaces
         Task<string> GetUserNameAsync(string userId);
 
         Task<(bool, string)> UpdateUserAsync(UpdateApplicationUserDto userDto);
+
+        Task<(bool, IEnumerable<ApplicationUserDto>)> GetAllUsersAsync();
     }
 }

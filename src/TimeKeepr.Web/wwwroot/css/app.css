@@ -30,6 +30,18 @@ div.card {
     color: #1b0c3e;
 }
 
+th {
+    color: #d51c27;
+}
+
+td {
+    color: #1b0c3e;
+}
+
+.table > :not(:last-child) > :last-child > * {
+    border-bottom-color: #1b0c3e;
+}
+
 .btn-check:focus + .btn-secondary, .btn-secondary:focus {
     color: #fff;
     box-shadow: 0 0 0 0.25rem rgb(213 28 39 / 50%) !important;

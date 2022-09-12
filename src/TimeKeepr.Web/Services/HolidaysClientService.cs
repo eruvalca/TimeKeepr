@@ -15,7 +15,7 @@ namespace TimeKeepr.Web.Services
 
         public async Task<RequestResult<IEnumerable<HolidayDto>>> GetByYear(int year)
         {
-            var response = await _client.GetFromJsonAsync<RequestResult<IEnumerable<HolidayDto>>>($"holidays/{year}");
+            var response = await _client.GetFromJsonAsync<RequestResult<IEnumerable<HolidayDto>>>($"holidays/year/{year}");
 
             if (response is not null)
             {
