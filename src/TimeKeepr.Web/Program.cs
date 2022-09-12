@@ -2,9 +2,11 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using TimeKeepr.UI.Common;
+using TimeKeepr.UI.Common.Providers;
+using TimeKeepr.UI.Services;
 using TimeKeepr.Web;
-using TimeKeepr.Web.Providers;
-using TimeKeepr.Web.Services;
+using TimeKeepr.Web.Common;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -17,6 +19,7 @@ builder.Services.AddScoped<PtoEntriesClientService>();
 builder.Services.AddScoped<HolidaysClientService>();
 
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddScoped<ILocalSecureStorage, BrowserLocalSecureStorage>();
 
 builder.Services.AddAuthorizationCore();
 

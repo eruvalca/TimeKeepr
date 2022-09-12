@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using TimeKeepr.Application.Identity.Dtos;
 using TimeKeepr.Application.PtoEntries;
-using TimeKeepr.Web.Services;
+using TimeKeepr.UI.Services;
 
 namespace TimeKeepr.Web.Pages.Identity
 {

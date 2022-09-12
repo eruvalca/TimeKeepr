@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components;
-using TimeKeepr.Web.Services;
 using TimeKeepr.Application.Identity.Dtos;
 using Microsoft.AspNetCore.Components.Web;
+using TimeKeepr.UI.Services;
 
 namespace TimeKeepr.Web.Shared.Identity
 {

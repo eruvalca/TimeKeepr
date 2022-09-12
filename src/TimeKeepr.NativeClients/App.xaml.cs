@@ -1,0 +1,12 @@
+﻿namespace TimeKeepr.NativeClients
+{
+    public partial class App : Microsoft.Maui.Controls.Application
+    {
+        public App()
+        {
+            InitializeComponent();
+
+            MainPage = new MainPage();
+        }
+    }
+}

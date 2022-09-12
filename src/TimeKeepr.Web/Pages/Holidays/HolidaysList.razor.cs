@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using TimeKeepr.Application.Holidays.Dtos;
-using TimeKeepr.Web.Services;
+using TimeKeepr.UI.Services;
 
 namespace TimeKeepr.Web.Pages.Holidays
 {

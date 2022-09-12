@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TimeKeepr.Application\TimeKeepr.Application.csproj" />
+    <ProjectReference Include="..\TimeKeepr.UI\TimeKeepr.UI.csproj" />
   </ItemGroup>
 
 </Project>
