@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 
-namespace TimeKeepr.Web.Shared
+namespace TimeKeepr.UI.Shared
 {
     [Authorize]
     public partial class AvailableHoursDisplay

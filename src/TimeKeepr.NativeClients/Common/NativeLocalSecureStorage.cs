@@ -11,19 +11,19 @@ namespace TimeKeepr.NativeClients.Common
     {
         public async Task<string> GetAsync(string item)
         {
-            return await SecureStorage.GetAsync(item);
+            return await SecureStorage.Default.GetAsync(item);
         }
 
         public async Task<bool> RemoveAsync(string item)
         {
-            return await Task.FromResult(SecureStorage.Remove(item));
+            return await Task.FromResult(SecureStorage.Default.Remove(item));
         }
 
         public async Task<bool> SetAsync(string name, string value)
         {
             try
             {
-                await Task.FromResult(SecureStorage.SetAsync(name, value));
+                await Task.FromResult(SecureStorage.Default.SetAsync(name, value));
                 return true;
             }
             catch (Exception)

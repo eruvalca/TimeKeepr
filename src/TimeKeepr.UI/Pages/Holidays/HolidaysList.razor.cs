@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using TimeKeepr.Application.Holidays.Dtos;
 using TimeKeepr.UI.Services;
 
-namespace TimeKeepr.Web.Pages.Holidays
+namespace TimeKeepr.UI.Pages.Holidays
 {
     [Authorize]
     public partial class HolidaysList

@@ -4,7 +4,7 @@ using TimeKeepr.Application.Identity.Dtos;
 using Microsoft.AspNetCore.Components.Web;
 using TimeKeepr.UI.Services;
 
-namespace TimeKeepr.Web.Shared.Identity
+namespace TimeKeepr.UI.Shared.Identity
 {
     public partial class LoginDisplay
     {

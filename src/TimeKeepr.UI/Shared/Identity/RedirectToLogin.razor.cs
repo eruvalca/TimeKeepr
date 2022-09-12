@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace TimeKeepr.Web.Shared.Identity
+namespace TimeKeepr.UI.Shared.Identity
 {
     public partial class RedirectToLogin
     {

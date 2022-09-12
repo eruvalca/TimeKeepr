@@ -7,7 +7,7 @@ using TimeKeepr.Application.PtoEntries.Dtos;
 using TimeKeepr.Domain.Enums;
 using TimeKeepr.UI.Services;
 
-namespace TimeKeepr.Web.Pages.PtoEntry
+namespace TimeKeepr.UI.Pages.PtoEntry
 {
     [Authorize]
     public partial class EditPtoEntry

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace TimeKeepr.Web.Shared
+namespace TimeKeepr.UI.Shared
 {
     public partial class LoadingSpinner
     {

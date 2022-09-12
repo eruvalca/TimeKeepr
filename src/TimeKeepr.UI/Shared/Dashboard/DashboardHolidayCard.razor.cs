@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using TimeKeepr.Application.Holidays.Dtos;
 
-namespace TimeKeepr.Web.Shared.Dashboard
+namespace TimeKeepr.UI.Shared.Dashboard
 {
     [Authorize]
     public partial class DashboardHolidayCard

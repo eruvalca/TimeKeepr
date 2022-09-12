@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 using TimeKeepr.Application.Identity.Dtos;
-using TimeKeepr.Application.PtoEntries.Dtos;
+using TimeKeepr.Application.PtoEntries;
 using TimeKeepr.UI.Services;
 
-namespace TimeKeepr.Web.Pages.Identity
+namespace TimeKeepr.UI.Pages.Identity
 {
-    public partial class Register
+    [Authorize]
+    public partial class Profile
     {
         [Inject]
         private IdentityClientService IdentityService { get; set; }
@@ -14,7 +16,9 @@ namespace TimeKeepr.Web.Pages.Identity
         [Inject]
         private NavigationManager Navigation { get; set; }
 
-        private RegisterDto RegisterDto { get; set; } = new RegisterDto();
+        private ApplicationUserDto User { get; set; }
+        private UpdateApplicationUserDto UserDto { get; set; }
+
         private decimal _vacationCarriedOver { get; set; }
         private decimal VacationCarriedOver
         {
@@ -39,29 +43,38 @@ namespace TimeKeepr.Web.Pages.Identity
         private bool ShowServerErrors { get; set; } = false;
         private bool DisableSubmit { get; set; } = false;
 
+        protected override async Task OnInitializedAsync()
+        {
+            User = await IdentityService.GetUserDetails();
+            //var vacationCarriedOverEntry = await PTOEntriesService.GetVacationCarriedOverEntryByUserId(TimeKeepUser.Id);
+
+            //VacationCarriedOver = vacationCarriedOverEntry is null ? 0 : vacationCarriedOverEntry.PTOHours / 8;
+
+            UserDto = new UpdateApplicationUserDto()
+            {
+                Id = User.Id,
+                Email = User.Email,
+                FirstName = User.FirstName,
+                LastName = User.LastName,
+                HireDate = User.HireDate,
+                VacationDaysAccruedPerMonth = User.VacationDaysAccruedPerMonth,
+                SickHoursAccruedPerMonth = User.SickHoursAccruedPerMonth,
+                PersonalDaysPerYear = User.PersonalDaysPerYear
+            };
+        }
+
         private async Task HandleSubmit()
         {
             DisableSubmit = true;
             ShowServerErrors = false;
 
-            var response = await IdentityService.Register(RegisterDto);
+            //User.VacationDaysCarriedOver = VacationCarriedOver;
+
+            var response = await IdentityService.UpdateUser(UserDto);
 
             if (response.Succeeded)
             {
-                if (VacationCarriedOver > 0)
-                {
-                    var user = await IdentityService.GetUserDetails();
-                    var vacationCarryOverEntry = new CreatePtoEntryDto()
-                    {
-                        CreatedBy = user.Id,
-                        PtoHours = VacationCarriedOver,
-                        PtoDate = new DateTime(DateTime.Today.Year, 1, 1),
-                        PtoType = Domain.Enums.PtoType.VacationCarryOver
-                    };
-
-                    _ = await PtoEntriesService.Create(vacationCarryOverEntry);
-                }
-
+                await IdentityService.Logout();
                 Navigation.NavigateTo("/");
             }
             else

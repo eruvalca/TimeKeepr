@@ -4,7 +4,7 @@ using TimeKeepr.Application.PtoEntries.Dtos;
 using TimeKeepr.Domain.Entities;
 using TimeKeepr.Domain.Enums;
 
-namespace TimeKeepr.Web.Shared.PtoEntries
+namespace TimeKeepr.UI.Shared.PtoEntries
 {
     [Authorize]
     public partial class PtoEntryList

@@ -8,7 +8,7 @@ using TimeKeepr.Application.PtoEntries.Dtos;
 using TimeKeepr.Domain.Enums;
 using TimeKeepr.UI.Services;
 
-namespace TimeKeepr.Web.Shared.Dashboard
+namespace TimeKeepr.UI.Shared.Dashboard
 {
     [Authorize]
     public partial class Dashboard

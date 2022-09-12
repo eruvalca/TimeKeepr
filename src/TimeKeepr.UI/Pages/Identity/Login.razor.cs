@@ -2,7 +2,7 @@
 using TimeKeepr.Application.Identity.Dtos;
 using TimeKeepr.UI.Services;
 
-namespace TimeKeepr.Web.Pages.Identity
+namespace TimeKeepr.UI.Pages.Identity
 {
     public partial class Login
     {

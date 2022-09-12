@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 
-namespace TimeKeepr.Web.Shared.Dashboard
+namespace TimeKeepr.UI.Shared.Dashboard
 {
     [Authorize]
     public partial class DashboardCard
