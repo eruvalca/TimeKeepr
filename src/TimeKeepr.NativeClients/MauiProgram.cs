@@ -25,13 +25,15 @@ namespace TimeKeepr.NativeClients
 #endif
 
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7268/api/v1/") });
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://192.168.68.98:7268/api/v1/") });
 
             builder.Services.AddScoped<IdentityClientService>();
             builder.Services.AddScoped<PtoEntriesClientService>();
             builder.Services.AddScoped<HolidaysClientService>();
 
             builder.Services.AddScoped<ILocalSecureStorage, NativeLocalSecureStorage>();
+
+            builder.Services.AddAuthorizationCore();
 
             builder.Services.AddScoped<AuthenticationStateProvider, TokenAuthenticationStateProvider>();
 
