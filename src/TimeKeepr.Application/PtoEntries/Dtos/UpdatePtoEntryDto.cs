@@ -15,13 +15,5 @@ namespace TimeKeepr.Application.PtoEntries.Dtos
         public PtoType PtoType { get; set; }
         public DateTime PtoDate { get; set; }
         public string? ModifiedBy { get; set; }
-
-        public UpdatePtoEntryDto(PtoEntry entry, string applicationUserId)
-        {
-            PtoHours = entry.PtoHours;
-            PtoType = entry.PtoType;
-            PtoDate = entry.PtoDate;
-            ModifiedBy = applicationUserId;
-        }
     }
 }

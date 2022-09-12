@@ -15,7 +15,6 @@ namespace TimeKeepr.Application.Common.Logic
 
         public static decimal GetMaxAccruedHoursAllowedByType(PtoType ptoType, decimal vacationDaysAccruedPerMonth = 1.25M)
         {
-            // TODO: set parameter to default vacationDaysAccruedPerMonth, optional param
             return ptoType switch
             {
                 PtoType.Vacation => (12 * vacationDaysAccruedPerMonth) * 8,
@@ -26,7 +25,7 @@ namespace TimeKeepr.Application.Common.Logic
             };
         }
 
-        public static decimal GetVacationHoursCarriedOverByYear(IEnumerable<PtoEntry> ptoEntries, int year)
+        public static decimal GetVacationHoursCarriedOverByYear(IEnumerable<PtoEntryDto> ptoEntries, int year)
         {
             return ptoEntries
                 .Where(p => p.PtoType == PtoType.VacationCarryOver
@@ -34,7 +33,7 @@ namespace TimeKeepr.Application.Common.Logic
                 .Sum(p => p.PtoHours);
         }
 
-        public static decimal GetVacationHoursUsedInFirstQuarterByYear(IEnumerable<PtoEntry> ptoEntries, int year)
+        public static decimal GetVacationHoursUsedInFirstQuarterByYear(IEnumerable<PtoEntryDto> ptoEntries, int year)
         {
             return ptoEntries
                 .Where(p => p.PtoType == PtoType.Vacation
@@ -42,7 +41,7 @@ namespace TimeKeepr.Application.Common.Logic
                     && p.PtoDate.Date <= new DateTime(year, 3, 31).Date)
                 .Sum(p => p.PtoHours);
         }
-        public static decimal GetHoursPlannedAfterDateByType(IEnumerable<PtoEntry> ptoEntries, DateTime afterDate, PtoType ptoType)
+        public static decimal GetHoursPlannedAfterDateByType(IEnumerable<PtoEntryDto> ptoEntries, DateTime afterDate, PtoType ptoType)
         {
             afterDate = afterDate.ToUniversalTime();
 
@@ -105,7 +104,7 @@ namespace TimeKeepr.Application.Common.Logic
         }
 
         public static decimal GetSickHoursAvailableByDate(DateTime hireDate, decimal sickHoursAccruedPerMonth,
-            IEnumerable<PtoEntry> ptoEntries, DateTime asOfDate)
+            IEnumerable<PtoEntryDto> ptoEntries, DateTime asOfDate)
         {
             hireDate = hireDate.ToUniversalTime();
             asOfDate = asOfDate.ToUniversalTime();
@@ -139,7 +138,7 @@ namespace TimeKeepr.Application.Common.Logic
             return sickHoursAvailable;
         }
 
-        public static decimal GetPersonalHoursAvailableByDate(int personalDaysPerYear, IEnumerable<PtoEntry> ptoEntries,
+        public static decimal GetPersonalHoursAvailableByDate(int personalDaysPerYear, IEnumerable<PtoEntryDto> ptoEntries,
             DateTime asOfDate)
         {
             asOfDate = asOfDate.ToUniversalTime();
@@ -155,7 +154,7 @@ namespace TimeKeepr.Application.Common.Logic
             return personalHoursAvailable;
         }
 
-        public static decimal GetRemainingVacationHoursCarriedOverByYear(IEnumerable<PtoEntry> ptoEntries, int year)
+        public static decimal GetRemainingVacationHoursCarriedOverByYear(IEnumerable<PtoEntryDto> ptoEntries, int year)
         {
             var vacationCarryOverExpirationDate = new DateTime(year, 3, 31);
 

@@ -1,0 +1,39 @@
+﻿@page "/{year:int}/holidays"
+
+<Condition Evaluation="Holidays is not null">
+    <Match>
+        <div class="row">
+            <div class="col-12">
+                <h3 class="page-header">@DateTime.Today.Year Holidays</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-sm table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <Iterations Items="Holidays.OrderBy(h => h.Date)">
+                            <tr>
+                                <td class="text-right">@context.Date.ToString("dddd"), @context.Date.ToString("M")</td>
+                                <td>@context.Name</td>
+                            </tr>
+                        </Iterations>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </Match>
+
+    <NotMatch>
+        <div class="row">
+            <div class="col-12 text-center">
+                <LoadingSpinner MarginTop="50" />
+            </div>
+        </div>
+    </NotMatch>
+</Condition>

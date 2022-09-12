@@ -1,0 +1,11 @@
+﻿th {
+    color: #d51c27;
+}
+
+td {
+    color: #1b0c3e;
+}
+
+.table > :not(:last-child) > :last-child > * {
+    border-bottom-color: #1b0c3e;
+}

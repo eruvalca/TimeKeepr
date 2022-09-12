@@ -14,7 +14,7 @@ namespace TimeKeepr.Domain.Entities
         public int Year { get; set; }
         public DateTime Created { get; set; }
         public string? CreatedBy { get; set; }
-        public DateTime LastModified { get; set; }
+        public DateTime? LastModified { get; set; }
         public string? ModifiedBy { get; set; }
     }
 }

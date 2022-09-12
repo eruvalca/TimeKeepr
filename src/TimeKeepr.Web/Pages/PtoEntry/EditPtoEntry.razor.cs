@@ -1,18 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
-using System.ComponentModel.DataAnnotations;
 using TimeKeepr.Application.Common.Logic;
 using TimeKeepr.Application.Identity.Dtos;
 using TimeKeepr.Application.PtoEntries;
 using TimeKeepr.Application.PtoEntries.Dtos;
-using TimeKeepr.Domain.Entities;
 using TimeKeepr.Domain.Enums;
 using TimeKeepr.Web.Services;
 
 namespace TimeKeepr.Web.Pages.PtoEntry
 {
     [Authorize]
-    public partial class CreatePtoEntry
+    public partial class EditPtoEntry
     {
         [Inject]
         private IdentityClientService IdentityService { get; set; }
@@ -21,8 +19,11 @@ namespace TimeKeepr.Web.Pages.PtoEntry
         [Inject]
         private NavigationManager Navigation { get; set; }
 
+        [Parameter]
+        public int Id { get; set; }
+
         private ApplicationUserDto? User { get; set; }
-        private CreatePtoEntryDto PtoDto { get; set; } = new();
+        private UpdatePtoEntryDto PtoDto { get; set; } = new();
         private IEnumerable<PtoEntryDto>? UserPtoEntries { get; set; }
 
         private decimal _ptoHours;
@@ -80,22 +81,30 @@ namespace TimeKeepr.Web.Pages.PtoEntry
         private List<string> ServerMessages { get; set; } = new List<string>();
         private bool ShowServerErrors { get; set; } = false;
         private bool DisableSubmit { get; set; } = false;
+        private bool DisableDelete { get; set; } = false;
 
         protected override async Task OnInitializedAsync()
         {
             User = await IdentityService.GetUserDetails();
 
             var ptoEntriesRequest = await PtoEntriesService.GetByUserAndYear(User.Id, DateTime.Today.Year);
+            var thisPtoEntryRequest = await PtoEntriesService.GetyById(Id);
 
-            if (ptoEntriesRequest.Succeeded)
+            if (ptoEntriesRequest.Succeeded && thisPtoEntryRequest.Succeeded)
             {
+                if (thisPtoEntryRequest.Data.ApplicationUserId != User.Id)
+                {
+                    Navigation.NavigateTo("/");
+                }
+
                 UserPtoEntries = ptoEntriesRequest.Data.ToList();
 
-                PtoDate = DateTime.Today;
-                PtoHours = 1;
-                PtoType = PtoType.Vacation;
+                PtoDto.PtoEntryId = thisPtoEntryRequest.Data.PtoEntryId;
+                PtoDto.ModifiedBy = thisPtoEntryRequest.Data.ModifiedBy;
 
-                PtoDto.CreatedBy = User.Id;
+                PtoDate = thisPtoEntryRequest.Data.PtoDate.ToLocalTime();
+                PtoHours = Math.Abs(thisPtoEntryRequest.Data.PtoHours);
+                PtoType = thisPtoEntryRequest.Data.PtoType;
             }
             else
             {
@@ -107,11 +116,29 @@ namespace TimeKeepr.Web.Pages.PtoEntry
         {
             DisableSubmit = true;
 
+            PtoDto.PtoDate = PtoDate;
             PtoDto.PtoHours = PtoHours * -1;
             PtoDto.PtoType = PtoType;
-            PtoDto.PtoDate = PtoDate;
 
-            var result = await PtoEntriesService.Create(PtoDto);
+            var result = await PtoEntriesService.Update(Id, PtoDto);
+
+            if (result.Succeeded)
+            {
+                Navigation.NavigateTo("/");
+            }
+            else
+            {
+                ServerMessages = result.Errors.ToList();
+                ShowServerErrors = true;
+                DisableSubmit = false;
+            }
+        }
+
+        private async Task HandleDelete()
+        {
+            DisableDelete = true;
+
+            var result = await PtoEntriesService.Delete(Id);
 
             if (result.Succeeded)
             {

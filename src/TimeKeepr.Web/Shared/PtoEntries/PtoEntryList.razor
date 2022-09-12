@@ -1,0 +1,38 @@
+﻿
+<div class="row">
+    <div class="col-12">
+        <h5 class="header">PTO Entries</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table class="table table-sm table-responsive">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Day</th>
+                    <th>Type</th>
+                    <th>Hours</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <Iterations Items="PtoEntries">
+                    <tr>
+                        <td class="text-end">@context.PtoDate.ToLocalTime().ToShortDateString()</td>
+                        <td class="text-start">@context.PtoDate.ToLocalTime().ToString("dddd")</td>
+                        <td class="text-start">@context.PtoType</td>
+                        <td class="text-end">@Math.Abs(context.PtoHours)</td>
+                        <td class="text-center">
+                            <button type="button"
+                                    class="btn btn-sm btn-secondary"
+                                    @onclick='() => Navigation.NavigateTo($"/ptoEntry/edit/{context.PtoEntryId}")'>
+                                Edit
+                            </button>
+                        </td>
+                    </tr>
+                </Iterations>
+            </tbody>
+        </table>
+    </div>
+</div>
