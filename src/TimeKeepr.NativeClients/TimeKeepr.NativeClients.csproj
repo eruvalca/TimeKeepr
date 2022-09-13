@@ -51,6 +51,15 @@
     </ItemGroup>
 
     <ItemGroup>
+      <AndroidResource Remove="Shared\**" />
+      <Compile Remove="Shared\**" />
+      <Content Remove="Shared\**" />
+      <EmbeddedResource Remove="Shared\**" />
+      <MauiXaml Remove="Shared\**" />
+      <None Remove="Shared\**" />
+    </ItemGroup>
+
+    <ItemGroup>
       <None Remove="Resources\Splash\android_chrome_large.png" />
     </ItemGroup>
 
@@ -68,10 +77,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\TimeKeepr.UI\TimeKeepr.UI.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Shared\" />
     </ItemGroup>
 
 </Project>
