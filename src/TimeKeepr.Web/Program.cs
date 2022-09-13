@@ -12,7 +12,14 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7268/api/v1/") });
+if (builder.HostEnvironment.Environment == "Development")
+{
+    builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7268/api/v1/") });
+}
+else
+{
+    builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7268/api/v1/") });
+}
 
 builder.Services.AddScoped<IdentityClientService>();
 builder.Services.AddScoped<PtoEntriesClientService>();
