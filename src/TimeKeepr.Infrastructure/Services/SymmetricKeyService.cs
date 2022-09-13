@@ -13,12 +13,10 @@ namespace TimeKeepr.Infrastructure.Services
     public class SymmetricKeyService
     {
         private readonly IConfiguration _config;
-        private readonly IWebHostEnvironment _env;
 
-        public SymmetricKeyService(IConfiguration config, IWebHostEnvironment env)
+        public SymmetricKeyService(IConfiguration config)
         {
             _config = config;
-            _env = env;
         }
 
         public SymmetricSecurityKey GetSymmetricKey()
