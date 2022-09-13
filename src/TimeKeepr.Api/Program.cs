@@ -28,7 +28,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: AllowedSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("https://localhost:7134")
+            policy.WithOrigins("https://localhost:7134", "https://witty-beach-0f0d5910f.1.azurestaticapps.net")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
